@@ -15,18 +15,18 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
   -->
-# Changelog
-We will document all notable changes to this project in this file.
+# 5th
+This project creates objects which anyone can use with another JavaScript-based
+5th edition application to handle common use cases, like making a character,
+handling combat or even planning an encounter.
 
-We based the format on [Keep a Changelog][] and this project adheres to
-[Semantic Versioning][].
+## Usage
+To use this library in your application, simply include it with `npm`:
 
-## [Unreleased][]
-### Added
-- License.
-- Changelog.
-- Readme.
+```
+npm i --save 5th
+```
 
-[Keep a Changelog]: http://keepachangelog.com/en/1.0.0/
-[Semantic Versioning]: http://semver.org/spec/v2.0.0.html
-[Unreleased]: https://github.com/ryayak1460/5th
+You will need to provide your own response handler and entity gateway objects if
+required.  They will need to respond to a specific set of methods.  We will
+denote details here later.

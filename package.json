@@ -1,0 +1,25 @@
+{
+  "name": "5th",
+  "version": "0.0.0",
+  "description": "5th edition, a library for 5th edition D&D applications.",
+  "main": "index.js",
+  "scripts": {
+    "test": "istanbul cover _mocha -- --recursive"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ryayak1460/5th.git"
+  },
+  "author": "Ryan Y <ryayak1460@protingumas.org>",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/ryayak1460/5th/issues"
+  },
+  "homepage": "https://github.com/ryayak1460/5th#readme",
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "istanbul": "^0.4.5",
+    "mocha": "^4.0.1",
+    "sinon": "^4.0.1"
+  }
+}

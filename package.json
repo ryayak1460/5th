@@ -1,6 +1,6 @@
 {
   "name": "5th",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "5th edition, a library for 5th edition D&D applications.",
   "main": "index.js",
   "scripts": {

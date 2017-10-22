@@ -22,6 +22,8 @@ We based the format on [Keep a Changelog][] and this project adheres to
 [Semantic Versioning][].
 
 ## [Unreleased][]
+
+## [0.1.0][] - 2017-10-21
 ### Added
 - Select race transaction.
 
@@ -34,5 +36,6 @@ We based the format on [Keep a Changelog][] and this project adheres to
 
 [Keep a Changelog]: http://keepachangelog.com/en/1.0.0/
 [Semantic Versioning]: http://semver.org/spec/v2.0.0.html
-[Unreleased]: https://github.com/ryayak1460/5th/compare/0.0.0...master
+[Unreleased]: https://github.com/ryayak1460/5th/compare/0.1.0...master
+[0.1.0]: https://github.com/ryayak1460/5th/compare/0.0.0...0.1.0
 [0.0.0]: https://github.com/ryayak1460/5th/releases/tag/0.0.0

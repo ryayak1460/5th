@@ -27,6 +27,32 @@ To use this library in your application, simply include it with `npm`:
 npm i --save 5th
 ```
 
-You will need to provide your own response handler and entity gateway objects if
-required.  They will need to respond to a specific set of methods.  We will
-denote details here later.
+You will need to provide your own response handler, handler factory, entity
+gateway and gateway factory objects if required.  They will need to respond to a
+specific set of methods.  We will denote details here later.
+
+## Handler Factory
+
+You must implement a single object in your codebase with a "make" method which
+takes a string and generates an object with a "handle" method which takes an
+object and operates on it.  An example:
+
+```js
+// HandlerFactory.js
+class handlers = {
+  'select race': {
+    handle({ character }) {
+      // do something with the character and its newly created race
+    }
+  }
+}
+
+module.exports = class {
+  make(type) {
+    if (!handlers.hasOwnProperty(type)) {
+      // throw an error of some sort
+    }
+    return handlers[type]
+  }
+}
+```

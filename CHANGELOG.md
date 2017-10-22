@@ -22,6 +22,8 @@ We based the format on [Keep a Changelog][] and this project adheres to
 [Semantic Versioning][].
 
 ## [Unreleased][]
+### Added
+- Select race transaction.
 
 ## [0.0.0][] - 2017-10-20
 ### Added

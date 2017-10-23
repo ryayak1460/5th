@@ -17,5 +17,6 @@
  */
 const Character = require('./Character')
 const RaceFactory = require('./RaceFactory')
+const SubraceFactory = require('./SubraceFactory')
 
-module.exports = { Character, RaceFactory }
+module.exports = { Character, RaceFactory, SubraceFactory }

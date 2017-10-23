@@ -21,14 +21,18 @@ const Race = require('./Race')
 const isValidRace = race => race instanceof Race
 
 module.exports = class {
+  constructor(character) {
+    this.character = character || {}
+  }
+
   get race() {
-    return this._race
+    return this.character.race
   }
 
   set race(value) {
     if (!isValidRace(value)) {
       throw new InvalidRace
     }
-    this._race = value
+    this.character.race = value
   }
 }

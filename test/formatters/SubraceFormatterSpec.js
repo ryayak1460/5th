@@ -15,25 +15,31 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-const Dwarf = require('./Dwarf')
-const HillDwarf = require('./HillDwarf')
-const MountainDwarf = require('./MountainDwarf')
-const Elf = require('./Elf')
-const HighElf = require('./HighElf')
-const Halfling = require('./Halfling')
-const Human = require('./Human')
-const Dragonborn = require('./Dragonborn')
-const Gnome = require('./Gnome')
-const HalfElf = require('./HalfElf')
-const HalfOrc = require('./HalfOrc')
-const Tiefling = require('./Tiefling')
+const { expect } = require('chai')
+const { SubraceFormatter } = require('../../src/formatters')
+const {
+  HillDwarf, MountainDwarf,
+  HighElf
+} = require('../../src/entities/races')
 
-const standard = {
-  Dwarf, HillDwarf, MountainDwarf,
-  Elf, HighElf,
-  Halfling,
-  Human
-}
-const rare = { Dragonborn, Gnome, HalfElf, HalfOrc, Tiefling }
+describe('The subrace formatter', () => {
+  let formatter
+  const expectRaceToFormatTo = (subrace, name) =>
+    expect(formatter.format(subrace)).to.equal(name)
 
-module.exports = Object.assign({}, standard, rare)
+  beforeEach(() => {
+    formatter = new SubraceFormatter
+  })
+
+  it('will turn a hill dwarf into its name', () => {
+    expectRaceToFormatTo(new HillDwarf, 'hill dwarf')
+  })
+
+  it('will turn a mountain dwarf into its name', () => {
+    expectRaceToFormatTo(new HillDwarf, 'hill dwarf')
+  })
+
+  it('will turn a high elf into its name', () => {
+    expectRaceToFormatTo(new HighElf, 'high elf')
+  })
+})

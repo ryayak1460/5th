@@ -15,25 +15,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-const Dwarf = require('./Dwarf')
-const HillDwarf = require('./HillDwarf')
-const MountainDwarf = require('./MountainDwarf')
 const Elf = require('./Elf')
-const HighElf = require('./HighElf')
-const Halfling = require('./Halfling')
-const Human = require('./Human')
-const Dragonborn = require('./Dragonborn')
-const Gnome = require('./Gnome')
-const HalfElf = require('./HalfElf')
-const HalfOrc = require('./HalfOrc')
-const Tiefling = require('./Tiefling')
 
-const standard = {
-  Dwarf, HillDwarf, MountainDwarf,
-  Elf, HighElf,
-  Halfling,
-  Human
-}
-const rare = { Dragonborn, Gnome, HalfElf, HalfOrc, Tiefling }
+module.exports = class extends Elf {}
 
-module.exports = Object.assign({}, standard, rare)

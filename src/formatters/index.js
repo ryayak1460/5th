@@ -18,5 +18,11 @@
 const FormatterFactory = require('./FormatterFactory')
 const CharacterFormatter = require('./CharacterFormatter')
 const RaceFormatter = require('./RaceFormatter')
+const SubraceFormatter = require('./SubraceFormatter')
 
-module.exports = { FormatterFactory, CharacterFormatter, RaceFormatter }
+module.exports = {
+  FormatterFactory,
+  CharacterFormatter,
+  RaceFormatter,
+  SubraceFormatter
+}

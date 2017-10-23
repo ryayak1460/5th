@@ -19,19 +19,32 @@ const { expect } = require('chai')
 const { CharacterFormatter } = require('../../src/formatters')
 const { Character } = require('../../src/entities')
 const {
-  Dwarf, Elf, Halfling, Human,
-  Dragonborn, Gnome, HalfElf, HalfOrc, Tiefling
+  Dwarf, HillDwarf, MountainDwarf,
+  Elf,
+  Halfling,
+  Human,
+
+  Dragonborn,
+  Gnome,
+  HalfElf,
+  HalfOrc,
+  Tiefling
 } = require('../../src/entities/races')
 const { InvalidCharacter } = require('../../src/errors')
 
 describe('The character formatter', () => {
   let character, formatter
-  const expectFormatOfToEqual = (type, name) => {
-    character.race = new type
-    expect(formatter.format(character)).to.deep.equal({
-      race: name
+  const expectRaceToMatch = (type, name) =>
+    expectKeyToMatch({key: 'race', type, name })
+  const expectKeyToMatch = ({key, type, name}) => {
+    const value = new type
+    character[key] = value
+    expect(formatter.format(character)).to.deep.include({
+      [key]: name
     })
   }
+  const expectSubraceToMatch = (type, name) =>
+    expectKeyToMatch({key: 'subrace', type, name })
 
   beforeEach(() => {
     character = new Character
@@ -40,39 +53,49 @@ describe('The character formatter', () => {
 
   context('with a race', () => {
     it('will include a dwarf race', () => {
-      expectFormatOfToEqual(Dwarf, 'dwarf')
+      expectRaceToMatch(Dwarf, 'dwarf')
     })
 
     it('will include an elf race', () => {
-      expectFormatOfToEqual(Elf, 'elf')
+      expectRaceToMatch(Elf, 'elf')
     })
 
     it('will include a halfling race', () => {
-      expectFormatOfToEqual(Halfling, 'halfling')
+      expectRaceToMatch(Halfling, 'halfling')
     })
 
     it('will include a human race', () => {
-      expectFormatOfToEqual(Human, 'human')
+      expectRaceToMatch(Human, 'human')
     })
 
     it('will include a dragonborn race', () => {
-      expectFormatOfToEqual(Dragonborn, 'dragonborn')
+      expectRaceToMatch(Dragonborn, 'dragonborn')
     })
 
     it('will include a gnome race', () => {
-      expectFormatOfToEqual(Gnome, 'gnome')
+      expectRaceToMatch(Gnome, 'gnome')
     })
 
     it('will include a half-elf race', () => {
-      expectFormatOfToEqual(HalfElf, 'half-elf')
+      expectRaceToMatch(HalfElf, 'half-elf')
     })
 
     it('will include a half-orc race', () => {
-      expectFormatOfToEqual(HalfOrc, 'half-orc')
+      expectRaceToMatch(HalfOrc, 'half-orc')
     })
 
     it('will include a tiefling race', () => {
-      expectFormatOfToEqual(Tiefling, 'tiefling')
+      expectRaceToMatch(Tiefling, 'tiefling')
+    })
+  })
+
+  context('with a subrace', () => {
+    it('will include a Hill Dwarf subrace', () => {
+      expectSubraceToMatch(HillDwarf, 'hill dwarf')
+    })
+
+    it('will include a Mountain Dwarf subrace', () => {
+      expectSubraceToMatch(MountainDwarf, 'mountain dwarf')
     })
   })
 

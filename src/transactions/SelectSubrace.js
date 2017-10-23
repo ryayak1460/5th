@@ -15,25 +15,21 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-const Dwarf = require('./Dwarf')
-const HillDwarf = require('./HillDwarf')
-const MountainDwarf = require('./MountainDwarf')
-const Elf = require('./Elf')
-const HighElf = require('./HighElf')
-const Halfling = require('./Halfling')
-const Human = require('./Human')
-const Dragonborn = require('./Dragonborn')
-const Gnome = require('./Gnome')
-const HalfElf = require('./HalfElf')
-const HalfOrc = require('./HalfOrc')
-const Tiefling = require('./Tiefling')
+const { Character, RaceFactory, SubraceFactory } = require('../entities')
 
-const standard = {
-  Dwarf, HillDwarf, MountainDwarf,
-  Elf, HighElf,
-  Halfling,
-  Human
+const raceFactory = new RaceFactory
+const subraceFactory = new SubraceFactory
+
+module.exports = class {
+  constructor(formatterFactory, handlerFactory) {
+    this.formatter = formatterFactory.make('character')
+    this.handler = handlerFactory.make('select subrace')
+  }
+
+  process({ character: original, subrace }) {
+    const character = new Character(original)
+    character.race = raceFactory.make(original.race)
+    character.subrace = subraceFactory.make(subrace)
+    this.handler.handle({ character: this.formatter.format(character) })
+  }
 }
-const rare = { Dragonborn, Gnome, HalfElf, HalfOrc, Tiefling }
-
-module.exports = Object.assign({}, standard, rare)

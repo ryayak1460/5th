@@ -16,16 +16,25 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 const RaceFormatter = require('./RaceFormatter')
+const SubraceFormatter = require('./SubraceFormatter')
 const { Character } = require('../entities')
 const { InvalidCharacter } = require('../errors')
 
 const raceFormatter = new RaceFormatter
+const subraceFormatter = new SubraceFormatter
+const getRace = character => character.race ?
+  {race: raceFormatter.format(character.race)} :
+  {}
+
+const getSubrace = character => character.subrace ?
+  {subrace: subraceFormatter.format(character.subrace)} :
+  {}
 
 module.exports = class {
   format(character) {
     if (!(character instanceof Character)) {
       throw new InvalidCharacter
     }
-    return { race: raceFormatter.format(character.race) }
+    return Object.assign({}, getRace(character), getSubrace(character))
   }
 }

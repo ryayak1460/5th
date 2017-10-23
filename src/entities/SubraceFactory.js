@@ -17,13 +17,21 @@
  */
 const {
   HillDwarf, MountainDwarf,
-  HighElf
+  HighElf, WoodElf, DarkElf,
+  Lightfoot, Stout,
+  ForestGnome, RockGnome
 } = require('../../src/entities/races')
 
 const subraces = {
   'hill dwarf': new HillDwarf,
   'mountain dwarf': new MountainDwarf,
-  'high elf': new HighElf
+  'high elf': new HighElf,
+  'wood elf': new WoodElf,
+  'dark elf': new DarkElf,
+  lightfoot: new Lightfoot,
+  stout: new Stout,
+  'forest gnome': new ForestGnome,
+  'rock gnome': new RockGnome
 }
 
 module.exports = class {

@@ -20,20 +20,32 @@ const HillDwarf = require('./HillDwarf')
 const MountainDwarf = require('./MountainDwarf')
 const Elf = require('./Elf')
 const HighElf = require('./HighElf')
+const WoodElf = require('./WoodElf')
+const DarkElf = require('./DarkElf')
 const Halfling = require('./Halfling')
+const Lightfoot = require('./Lightfoot')
+const Stout = require('./Stout')
 const Human = require('./Human')
 const Dragonborn = require('./Dragonborn')
 const Gnome = require('./Gnome')
+const ForestGnome = require('./ForestGnome')
+const RockGnome = require('./RockGnome')
 const HalfElf = require('./HalfElf')
 const HalfOrc = require('./HalfOrc')
 const Tiefling = require('./Tiefling')
 
 const standard = {
   Dwarf, HillDwarf, MountainDwarf,
-  Elf, HighElf,
-  Halfling,
+  Elf, HighElf, WoodElf, DarkElf,
+  Halfling, Lightfoot, Stout,
   Human
 }
-const rare = { Dragonborn, Gnome, HalfElf, HalfOrc, Tiefling }
+const rare = {
+  Dragonborn,
+  Gnome, ForestGnome, RockGnome,
+  HalfElf,
+  HalfOrc,
+  Tiefling
+}
 
 module.exports = Object.assign({}, standard, rare)

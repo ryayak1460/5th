@@ -15,23 +15,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-const {
-  HillDwarf, MountainDwarf,
-  HighElf, WoodElf, DarkElf,
-  Lightfoot, Stout,
-  ForestGnome, RockGnome
-} = require('../entities/races')
+const Gnome = require('./Gnome')
 
-module.exports = class {
-  format(subrace) {
-    return subrace instanceof HillDwarf ? 'hill dwarf' :
-      subrace instanceof MountainDwarf ? 'mountain dwarf' :
-      subrace instanceof HighElf ? 'high elf' :
-      subrace instanceof WoodElf ? 'wood elf' :
-      subrace instanceof DarkElf ? 'dark elf' :
-      subrace instanceof Lightfoot ? 'lightfoot' :
-      subrace instanceof Stout ? 'stout' :
-      subrace instanceof ForestGnome ? 'forest gnome' :
-      subrace instanceof RockGnome ? 'rock gnome' : ''
-  }
-}
+module.exports = class extends Gnome {}
+

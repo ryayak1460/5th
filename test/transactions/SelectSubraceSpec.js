@@ -5,10 +5,10 @@ const { FormatterFactory } = require('../../src/formatters')
 describe('The select subrace transaction', () => {
   context('when successful', () => {
     let updatedCharacter, transaction
-    const processSubrace = subrace => 
-      transaction.process({character: { race: 'dwarf' }, subrace})
-    const expectSubraceToEqual = subrace =>
-      expect(updatedCharacter).to.deep.equal({race: 'dwarf', subrace})
+    const processSubrace = (race, subrace) => 
+      transaction.process({character: {race}, subrace})
+    const expectSubraceToEqual = (race, subrace) =>
+      expect(updatedCharacter).to.deep.equal({race, subrace})
 
     beforeEach(() => {
       let formatterFactory = new FormatterFactory
@@ -25,18 +25,48 @@ describe('The select subrace transaction', () => {
     })
 
     it('will allow hill dwarfs', () => {
-      processSubrace('hill dwarf')
-      expectSubraceToEqual('hill dwarf')
+      processSubrace('dwarf', 'hill dwarf')
+      expectSubraceToEqual('dwarf', 'hill dwarf')
     })
 
     it('will allow mountain dwarfs', () => {
-      processSubrace('mountain dwarf')
-      expectSubraceToEqual('mountain dwarf')
+      processSubrace('dwarf', 'mountain dwarf')
+      expectSubraceToEqual('dwarf', 'mountain dwarf')
     })
 
     it('will allow high elfs', () => {
-      processSubrace('high elf')
-      expectSubraceToEqual('high elf')
+      processSubrace('elf', 'high elf')
+      expectSubraceToEqual('elf', 'high elf')
+    })
+
+    it('will allow wood elfs', () => {
+      processSubrace('elf', 'wood elf')
+      expectSubraceToEqual('elf', 'wood elf')
+    })
+
+    it('will allow dark elfs', () => {
+      processSubrace('elf', 'dark elf')
+      expectSubraceToEqual('elf', 'dark elf')
+    })
+
+    it('will allow lightfeet', () => {
+      processSubrace('halfling', 'lightfoot')
+      expectSubraceToEqual('halfling', 'lightfoot')
+    })
+
+    it('will allow stouts', () => {
+      processSubrace('halfling', 'stout')
+      expectSubraceToEqual('halfling', 'stout')
+    })
+
+    it('will allow forest gnomes', () => {
+      processSubrace('gnome', 'forest gnome')
+      expectSubraceToEqual('gnome', 'forest gnome')
+    })
+
+    it('will allow rock gnomes', () => {
+      processSubrace('gnome', 'rock gnome')
+      expectSubraceToEqual('gnome', 'rock gnome')
     })
   })
 })

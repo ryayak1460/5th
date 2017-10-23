@@ -42,4 +42,8 @@ describe('The subrace formatter', () => {
   it('will turn a high elf into its name', () => {
     expectRaceToFormatTo(new HighElf, 'high elf')
   })
+
+  it('will turn an invalid subrace into an empty string', () => {
+    expect(formatter.format({})).to.be.empty
+  })
 })

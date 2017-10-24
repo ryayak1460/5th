@@ -19,10 +19,15 @@ const RequiresFormatterFactory = require('./RequiresFormatterFactory')
 const RequiresHandlerFactory = require('./RequiresHandlerFactory')
 const InvalidCharacter = require('./InvalidCharacter')
 const InvalidRace = require('./InvalidRace')
+const InvalidSubrace = require('./InvalidSubrace')
+const NotSubraceOfRace = require('./NotSubraceOfRace')
+const RequiresRace = require('./RequiresRace')
 const InvalidFormatter = require('./InvalidFormatter')
 
 const transactions = { RequiresFormatterFactory, RequiresHandlerFactory }
-const entities = { InvalidCharacter, InvalidRace }
+const entities = {
+  InvalidCharacter, InvalidRace, InvalidSubrace, NotSubraceOfRace, RequiresRace
+}
 const formatters = { InvalidFormatter }
 
 module.exports = Object.assign({}, transactions, entities, formatters)

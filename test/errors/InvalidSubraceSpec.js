@@ -15,31 +15,16 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-const {
-  HillDwarf, MountainDwarf,
-  HighElf, WoodElf, DarkElf,
-  Lightfoot, Stout,
-  ForestGnome, RockGnome
-} = require('../../src/entities/races')
-const { InvalidSubrace } = require('../errors')
+const { expect } = require('chai')
+const { InvalidSubrace } = require('../../src/errors')
 
-const subraces = {
-  'hill dwarf': new HillDwarf,
-  'mountain dwarf': new MountainDwarf,
-  'high elf': new HighElf,
-  'wood elf': new WoodElf,
-  'dark elf': new DarkElf,
-  lightfoot: new Lightfoot,
-  stout: new Stout,
-  'forest gnome': new ForestGnome,
-  'rock gnome': new RockGnome
-}
-
-module.exports = class {
-  make(name) {
-    if (!(name in subraces)) {
-      throw new InvalidSubrace
-    }
-    return subraces[name]
-  }
-}
+describe('The invalid subrace error', () => {
+  it('will have a canned message', () => {
+    let error = new InvalidSubrace
+    expect(error.message).to.equal('Invalid subrace.  Valid subraces: '
+      + 'hill dwarf, mountain dwarf, '
+      + 'high elf, wood elf, dark elf, '
+      + 'lightfoot, stout, '
+      + 'forest gnome, rock gnome')
+  })
+})

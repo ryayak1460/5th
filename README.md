@@ -39,7 +39,7 @@ object and operates on it.  An example:
 
 ```js
 // HandlerFactory.js
-class handlers = {
+const handlers = {
   'select race': {
     handle({ character }) {
       // do something with the character and its newly created race

@@ -18,4 +18,3 @@
 const Gnome = require('./Gnome')
 
 module.exports = class extends Gnome {}
-

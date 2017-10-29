@@ -18,4 +18,3 @@
 const Elf = require('./Elf')
 
 module.exports = class extends Elf {}
-

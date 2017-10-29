@@ -18,4 +18,3 @@
 const Halfling = require('./Halfling')
 
 module.exports = class extends Halfling {}
-

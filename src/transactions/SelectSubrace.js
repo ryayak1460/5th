@@ -17,30 +17,11 @@
  */
 const { Character, RaceFactory, SubraceFactory } = require('../entities')
 const { FormatterFactory } = require('../formatters')
-const {
-  RequiresHandlerFactory,
-  InvalidSubrace, NotSubraceOfRace, RequiresRace
-} = require('../errors')
+const { RequiresHandlerFactory, RequiresRace } = require('../errors')
 
 const formatterFactory = new FormatterFactory
 const raceFactory = new RaceFactory
 const subraceFactory = new SubraceFactory
-
-const validate = (race, subrace) => {
-  if (!race) {
-    throw new RequiresRace
-  }
-
-  if (!hasChild(race, subrace)) {
-    throw new NotSubraceOfRace(race, subrace)
-  }
-}
-
-const hasChild = (race, subrace) => {
-  const raceType = raceFactory.make(race)
-  const subraceType = subraceFactory.make(subrace)
-  return subraceType instanceof raceType.constructor
-}
 
 module.exports = class {
   constructor(handlerFactory) {
@@ -52,8 +33,10 @@ module.exports = class {
   }
 
   process({ character: original, subrace }) {
-    validate(original.race, subrace)
     const character = new Character(original)
+    if (!character.race) {
+      throw new RequiresRace
+    }
     character.race = raceFactory.make(original.race)
     character.subrace = subraceFactory.make(subrace)
     this.handler.handle({ character: this.formatter.format(character) })

@@ -91,10 +91,12 @@ describe('The character formatter', () => {
 
   context('with a subrace', () => {
     it('will include a Hill Dwarf subrace', () => {
+      character.race = new Dwarf
       expectSubraceToMatch(HillDwarf, 'hill dwarf')
     })
 
     it('will include a Mountain Dwarf subrace', () => {
+      character.race = new Dwarf
       expectSubraceToMatch(MountainDwarf, 'mountain dwarf')
     })
   })
@@ -103,6 +105,12 @@ describe('The character formatter', () => {
     it('will throw an exception', () => {
       const process = () => formatter.format({})
       expect(process).to.throw(InvalidCharacter)
+    })
+  })
+
+  context('with an empty character object', () => {
+    it('will return an empty object', () => {
+      expect(formatter.format(character)).to.eql({})
     })
   })
 })

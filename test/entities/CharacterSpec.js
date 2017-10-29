@@ -17,8 +17,21 @@
  */
 const { expect } = require('chai')
 const { Character } = require('../../src/entities')
-const { InvalidRace } = require('../../src/errors')
-const { Dwarf, Elf, Halfling, Human, Dragonborn, Gnome, HalfElf, HalfOrc, Tiefling } = require('../../src/entities/races')
+const {
+  InvalidRace, RequiresRace, NotSubraceOfRace
+} = require('../../src/errors')
+const {
+  Dwarf, HillDwarf, MountainDwarf,
+  Elf, HighElf, WoodElf, DarkElf,
+  Halfling,
+  Human,
+
+  Dragonborn,
+  Gnome,
+  HalfElf,
+  HalfOrc,
+  Tiefling
+} = require('../../src/entities/races')
 
 const races = [
   new Dwarf,
@@ -31,12 +44,22 @@ const races = [
   new HalfOrc,
   new Tiefling
 ]
+
+const dwarfs = [new HillDwarf, new MountainDwarf]
+const elfs = [new HighElf, new WoodElf, new DarkElf]
+const subraces = [...dwarfs, ...elfs]
+
 const invalidRaces = ['merman', '', 'saoehtusnaotehu', 'red dragon']
 
 describe('The character entity', () => {
+  let character
+
+  beforeEach(() => {
+    character = new Character
+  })
+
   context('race', () => {
     it('will allow valid races', () => {
-      let character = new Character
       races.forEach(race => {
         character.race = race
         expect(character.race).to.equal(race)
@@ -44,10 +67,60 @@ describe('The character entity', () => {
     })
 
     it('will not allow invalid races', () => {
-      let character = new Character
       invalidRaces.forEach(race => {
         let mutation = () => character.race = race
         expect(mutation).to.throw(InvalidRace)
+      })
+    })
+  })
+
+  context('subrace', () => {
+    context('with dwarfs', () => {
+      it('will allow valid dwarfs', () => {
+        character.race = new Dwarf
+        dwarfs.forEach(dwarf => {
+          character.subrace = dwarf
+          expect(character.subrace).to.equal(dwarf)
+        })
+      })
+
+      it('will throw without a main race of "dwarf"', () => {
+        const invalidRaces = races.filter(race => !(race instanceof Dwarf))
+        invalidRaces.forEach(race => {
+          character.race = race
+          dwarfs.forEach(dwarf => {
+            const process = () => character.subrace = dwarf
+            expect(process).to.throw(NotSubraceOfRace)
+          })
+        })
+      })
+    })
+
+    context('with elfs', () => {
+      it('will allow valid elfs', () => {
+        character.race = new Elf
+        elfs.forEach(elf => {
+          character.subrace = elf
+          expect(character.subrace).to.equal(elf)
+        })
+      })
+
+      it('will throw without a main race of "elf"', () => {
+        const invalidRaces = races.filter(race => !(race instanceof Elf))
+        invalidRaces.forEach(race => {
+          character.race = race
+          elfs.forEach(elf => {
+            const process = () => character.subrace = elf
+            expect(process).to.throw(NotSubraceOfRace)
+          })
+        })
+      })
+    })
+
+    it('will throw without a race', () => {
+      subraces.forEach(subrace => {
+        const process = () => character.subrace = subrace
+        expect(process).to.throw(RequiresRace)
       })
     })
   })

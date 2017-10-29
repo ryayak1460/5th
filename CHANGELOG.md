@@ -22,6 +22,8 @@ We based the format on [Keep a Changelog][] and this project adheres to
 [Semantic Versioning][].
 
 ## [Unreleased][]
+### Fixed
+- Moved subrace validation logic to Character entity.
 
 ## [0.2.0][] - 2017-10-24
 ### Added

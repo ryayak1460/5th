@@ -15,7 +15,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-const { InvalidRace } = require('../errors')
+const { InvalidRace, RequiresRace, NotSubraceOfRace } = require('../errors')
 const Race = require('./Race')
 
 const isValidRace = race => race instanceof Race
@@ -34,5 +34,20 @@ module.exports = class {
       throw new InvalidRace
     }
     this.character.race = value
+  }
+
+  get subrace() {
+    return this.character.subrace
+  }
+
+  set subrace(value) {
+    if (!this.race) {
+      throw new RequiresRace
+    }
+
+    if (!(value instanceof this.race.constructor)) {
+      throw new NotSubraceOfRace(this.race, value)
+    }
+    this.character.subrace = value
   }
 }

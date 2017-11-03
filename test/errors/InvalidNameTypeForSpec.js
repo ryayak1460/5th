@@ -15,8 +15,13 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-const SelectRace = require('./SelectRace')
-const SelectSubrace = require('./SelectSubrace')
-const ChooseNames = require('./ChooseNames')
+const { expect } = require('chai')
+const { InvalidNameTypeFor } = require('../../src/errors')
 
-module.exports = { SelectRace, SelectSubrace, ChooseNames }
+describe('The invalid name type for error', () => {
+  it('will have a canned message', () => {
+    const error = new InvalidNameTypeFor('dwarf', 'child')
+    expect(error.message)
+      .to.equal('You cannot give a child name to your dwarf character.')
+  })
+})

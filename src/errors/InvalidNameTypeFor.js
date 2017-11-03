@@ -15,8 +15,14 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-const SelectRace = require('./SelectRace')
-const SelectSubrace = require('./SelectSubrace')
-const ChooseNames = require('./ChooseNames')
+module.exports = class extends Error {
+  constructor(race, type) {
+    super()
+    this.race = race
+    this.type = type
+  }
 
-module.exports = { SelectRace, SelectSubrace, ChooseNames }
+  get message() {
+    return `You cannot give a ${this.type} name to your ${this.race} character.`
+  }
+}

@@ -22,6 +22,8 @@ We based the format on [Keep a Changelog][] and this project adheres to
 [Semantic Versioning][].
 
 ## [Unreleased][]
+
+## [0.3.0][] - 2017-11-08
 ### Added
 - Choose names transaction.
 
@@ -51,7 +53,8 @@ We based the format on [Keep a Changelog][] and this project adheres to
 
 [Keep a Changelog]: http://keepachangelog.com/en/1.0.0/
 [Semantic Versioning]: http://semver.org/spec/v2.0.0.html
-[Unreleased]: https://github.com/ryayak1460/5th/compare/0.2.2...master
+[Unreleased]: https://github.com/ryayak1460/5th/compare/0.3.0...master
+[0.3.0]: https://github.com/ryayak1460/5th/compare/0.2.2...0.3.0
 [0.2.2]: https://github.com/ryayak1460/5th/compare/0.2.1...0.2.2
 [0.2.1]: https://github.com/ryayak1460/5th/compare/0.2.0...0.2.1
 [0.2.0]: https://github.com/ryayak1460/5th/compare/0.1.0...0.2.0

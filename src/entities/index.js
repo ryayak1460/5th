@@ -16,7 +16,5 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 const Character = require('./Character')
-const RaceFactory = require('./RaceFactory')
-const SubraceFactory = require('./SubraceFactory')
 
-module.exports = { Character, RaceFactory, SubraceFactory }
+module.exports = { Character }

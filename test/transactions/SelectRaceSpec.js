@@ -17,18 +17,17 @@
  */
 const { expect } = require('chai')
 const { SelectRace } = require('../../src/transactions')
-const { RequiresFormatterFactory, RequiresHandlerFactory, InvalidRace } =
-  require('../../src/errors')
-const { FormatterFactory } = require('../../src/formatters')
+const { RequiresHandlerFactory, InvalidRace } = require('../../src/errors')
 
 const expectToHaveRace = (character, race) =>
-  expect(character).to.have.property('race').that.equal(race)
+  expect(character).to.have.property('race')
+    .that.have.property('id')
+    .that.equal(race)
 
 describe('The select race transaction', () => {
   let transaction, updatedCharacter
 
   beforeEach(() => {
-    let formatterFactory = new FormatterFactory
     let handlerFactory = {
       make(type) {
         return {
@@ -38,23 +37,43 @@ describe('The select race transaction', () => {
         }
       }
     }
-    transaction = new SelectRace(formatterFactory, handlerFactory)
+    transaction = new SelectRace(handlerFactory)
   })
 
   context('when successful', () => {
-    it('will allow dwarfs', () => {
-      transaction.process({character: {}, race: 'dwarf'})
-      expectToHaveRace(updatedCharacter, 'dwarf')
+    it('will allow hill dwarfs', () => {
+      transaction.process({character: {}, race: 'hill dwarf'})
+      expectToHaveRace(updatedCharacter, 'hill dwarf')
     })
 
-    it('will allow elfs', () => {
-      transaction.process({character: {}, race: 'elf'})
-      expectToHaveRace(updatedCharacter, 'elf')
+    it('will allow mountain dwarfs', () => {
+      transaction.process({character: {}, race: 'mountain dwarf'})
+      expectToHaveRace(updatedCharacter, 'mountain dwarf')
     })
 
-    it('will allow halflings', () => {
-      transaction.process({character: {}, race: 'halfling'})
-      expectToHaveRace(updatedCharacter, 'halfling')
+    it('will allow high elfs', () => {
+      transaction.process({character: {}, race: 'high elf'})
+      expectToHaveRace(updatedCharacter, 'high elf')
+    })
+
+    it('will allow wood elfs', () => {
+      transaction.process({character: {}, race: 'wood elf'})
+      expectToHaveRace(updatedCharacter, 'wood elf')
+    })
+
+    it('will allow dark elfs', () => {
+      transaction.process({character: {}, race: 'dark elf'})
+      expectToHaveRace(updatedCharacter, 'dark elf')
+    })
+
+    it('will allow lightfeet', () => {
+      transaction.process({character: {}, race: 'lightfoot'})
+      expectToHaveRace(updatedCharacter, 'lightfoot')
+    })
+
+    it('will allow stouts', () => {
+      transaction.process({character: {}, race: 'stout'})
+      expectToHaveRace(updatedCharacter, 'stout')
     })
 
     it('will allow humans', () => {
@@ -67,8 +86,14 @@ describe('The select race transaction', () => {
       expectToHaveRace(updatedCharacter, 'dragonborn')
     })
 
-    it('will allow gnomes', () => {
-      let race = 'gnome'
+    it('will allow forest gnomes', () => {
+      let race = 'forest gnome'
+      transaction.process({character: {}, race})
+      expectToHaveRace(updatedCharacter, race)
+    })
+
+    it('will allow rock gnomes', () => {
+      let race = 'rock gnome'
       transaction.process({character: {}, race})
       expectToHaveRace(updatedCharacter, race)
     })
@@ -94,15 +119,8 @@ describe('The select race transaction', () => {
     expect(process).to.throw(InvalidRace)
   })
 
-  it('will require a formatter factory', () => {
-    const createTransaction = () => { let x = new SelectRace }
-    expect(createTransaction).to.throw(RequiresFormatterFactory)
-  })
-
   it('will require a handler factory', () => {
-    const createTransaction = () => {
-      let x = new SelectRace(new FormatterFactory)
-    }
+    const createTransaction = () => { let x = new SelectRace }
     expect(createTransaction).to.throw(RequiresHandlerFactory)
   })
 })

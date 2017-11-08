@@ -15,12 +15,29 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-const { expect } = require('chai')
-const { HalfOrc } = require('../../../src/entities/races')
-const Race = require('../../../src/entities/Race')
+const { InvalidRace } = require('../errors')
 
-describe('The half-orc race', () => {
-  it('will have a race type', () => {
-    expect(new HalfOrc).to.be.an.instanceof(Race)
-  })
-})
+const races = [
+  'hill dwarf',
+  'mountain dwarf',
+  'high elf',
+  'wood elf',
+  'dark elf',
+  'lightfoot',
+  'stout',
+  'human',
+  'dragonborn',
+  'forest gnome',
+  'rock gnome',
+  'half-elf',
+  'half-orc',
+  'tiefling'
+]
+
+module.exports = {
+  validate(race) {
+    if (races.indexOf(race.id) === -1) {
+      throw new InvalidRace
+    }
+  }
+}

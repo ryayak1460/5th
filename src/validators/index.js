@@ -15,24 +15,6 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-const { expect } = require('chai')
-const { SubraceFactory } = require('../../src/entities')
-const { HillDwarf, MountainDwarf } = require('../../src/entities/races')
+const race = require('./RaceValidator')
 
-describe('The subrace factory', () => {
-  let factory
-  const expectNameToMake = (name, type) =>
-    expect(factory.make(name)).to.be.an.instanceof(type)
-
-  beforeEach(() => {
-    factory = new SubraceFactory
-  })
-
-  it('will create hill dwarfs', () => {
-    expectNameToMake('hill dwarf', HillDwarf)
-  })
-
-  it('will create mountain dwarfs', () => {
-    expectNameToMake('mountain dwarf', MountainDwarf)
-  })
-})
+module.exports = { race }

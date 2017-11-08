@@ -15,29 +15,49 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-const { InvalidRace } = require('../errors')
-
-const races = [
-  'hill dwarf',
-  'mountain dwarf',
-  'high elf',
-  'wood elf',
-  'dark elf',
-  'lightfoot',
-  'stout',
-  'human',
-  'dragonborn',
-  'forest gnome',
-  'rock gnome',
-  'half-elf',
-  'half-orc',
-  'tiefling'
-]
+const { RequiresRace, InvalidRace, InvalidNameTypeFor } = require('../errors')
 
 module.exports = {
   validate(race) {
-    if (races.indexOf(race.id) === -1) {
+    if (!hasRace(race))
+      throw new RequiresRace
+    if (!hasValidRace(race.id))
       throw new InvalidRace
-    }
+    if (hasNames(race) && !hasValidNames(race))
+      throw new InvalidNameTypeFor(race.id, Object.keys(race.names).join('/'))
   }
+}
+
+const hasRace = data => data && data.hasOwnProperty('id')
+const hasValidRace = name => name in races
+
+const dwarfNames = {given: true, clan: true}
+const elfNames = {child: true, adult: true, family: true}
+const halflingNames = {given: true, nickname: true, family: true}
+const humanNames = {given: true, surname: true}
+const gnomeNames = {given: true, nickname: true, clan: true}
+const races = {
+  'hill dwarf': dwarfNames,
+  'mountain dwarf': dwarfNames,
+  'high elf': elfNames,
+  'wood elf': elfNames,
+  'dark elf': elfNames,
+  lightfoot: halflingNames,
+  stout: halflingNames,
+  human: humanNames,
+  dragonborn: {given: true, childhood: true, clan: true},
+  'forest gnome': gnomeNames,
+  'rock gnome': gnomeNames,
+  'half-elf': [elfNames, humanNames],
+  'half-orc': [humanNames, {orc: true}],
+  tiefling: [{given: true}, {infernal: true}, {virtue: true}]
+}
+
+const hasNames = race => race.hasOwnProperty('names')
+const hasValidNames = race => {
+  const current = Object.keys(race.names)
+  const valid = races[race.id]
+  return current.every(name => valid instanceof Array ?
+    valid.some(option => name in option) :
+    name in valid)
 }

@@ -24,7 +24,8 @@ describe('The choose names transaction', () => {
   let updatedCharacter, transaction, character
 
   const expectNameToEqual = (type, name) =>
-    expect(updatedCharacter).to.have.property('names')
+    expect(updatedCharacter).to.have.property('race')
+      .that.have.property('names')
       .that.have.property(type)
       .that.equal(name)
   const expectGivenNameToEqual = name => expectNameToEqual('given', name)
@@ -40,56 +41,68 @@ describe('The choose names transaction', () => {
         }
       }
     })
-    character = { race: 'dwarf' }
+    character = {race: {id: 'hill dwarf'}}
   })
 
-  context('with a dwarf', () => {
-    it('will accept a given name', () => {
-      transaction.process({character, names: { given: 'Muradin' }})
-      expectGivenNameToEqual('Muradin')
-    })
+  const examples = {
+    'hill dwarf': {given: 'Muradin', clan: 'Bronzebeard'},
+    'mountain dwarf': {given: 'Thorin', clan: 'Oakenshield'},
+    'high elf': {child: 'Ara', adult: 'Adran', family: 'Amakiir'},
+    'wood elf': {child: 'Bryn', adult: 'Althaea', family: 'Amastacia'},
+    'dark elf': {child: 'Link', adult: 'Drizzt', family: "Do'Urden"},
+    lightfoot: {given: 'Bilbo', family: 'Baggins', nickname: 'Ringwinner'},
+    stout: {given: 'Bilbo', family: 'Baggins', nickname: 'Ringwinner'},
+    human: {given: 'Aragorn', surname: 'Son of Arathorn'},
+    dragonborn: {given: 'Arjhan', childhood: 'Climber', clan: 'Clethtinthiallor'},
+    'forest gnome': {
+      given: ['Alston', 'Alvyn', 'Boddynock', 'Brocc'],
+      nickname: 'Aleslosh',
+      clan: 'Beren'
+    },
+    'rock gnome': {
+      given: ['Bimpnottin', 'Breena', 'Caramip', 'Carlin'],
+      nickname: 'Ashhearth',
+      clan: 'Daergel'
+    },
+  }
 
-    it('will accept a clan name', () => {
-      transaction.process({character, names: { clan: 'Bronzebeard' }})
-      expectClanNameToEqual('Bronzebeard')
-    })
+  for (const race in examples) {
+    const fullName = examples[race]
+    for (const part in fullName) {
+      context(`with a ${race}`, () => {
+        it(`will accept the ${part} part`, () => {
+          const names = { [part]: fullName[part] }
+          transaction.process({character: {race: {id: race}}, names})
+          expectNameToEqual(part, fullName[part])
+        })
+      })
+    }
+  }
 
-    it('will update a given name', () => {
-      character = {race: 'dwarf', names: { given: 'Muradin' }}
-      transaction.process({character, names: { given: 'Thorin' }})
-      expectGivenNameToEqual('Thorin')
-    })
+  const racesWithOptions = {
+    'half-elf': [
+      {child: 'Del', adult: 'Aelar', family: 'Galanodel'},
+      {given: 'Ander', surname: 'Brightwood'}
+    ],
+    'half-orc': [{given: 'Aoth', surname: 'Ankhalab'}, {orc: 'Kansif'}],
+    tiefling: [{given: 'Anton'}, {infernal: 'Orianna'}, {virtue: 'Poetry'}]
+  }
 
-    it('will update a clan name', () => {
-      character = {race: 'dwarf', names: { clan: 'Bronzebeard' }}
-      transaction.process({character, names: { clan: 'Oakenshield' }})
-      expectClanNameToEqual('Oakenshield')
-    })
+  for (const raceWithOptions in racesWithOptions) {
+    context(`with a ${raceWithOptions}`, () => {
+      const examples = racesWithOptions[raceWithOptions]
 
-    it('will update a character with a given name', () => {
-      const names = { given: 'Muradin', clan: 'Bronzebeard' }
-      character = {race: 'dwarf', names}
-      transaction.process({character, names: { given: 'Thorin' }})
-      expectGivenNameToEqual('Thorin')
-    })
-
-    it('will update a character with a clan name', () => {
-      const names = { given: 'Muradin', clan: 'Bronzebeard' }
-      character = {race: 'dwarf', names}
-      transaction.process({character, names: { clan: 'Oakenshield' }})
-      expectClanNameToEqual('Oakenshield')
-    })
-
-    it('will throw with invalid name types', () => {
-      const invalidNameTypes = ['child', 'adult', 'family', 'nickname',
-        'surname', 'childhood', 'orc', 'infernal', 'virtue']
-      invalidNameTypes.forEach(type => {
-        const names = { [type]: 'BB' }
-        const process = () => transaction.process({character, names})
-        expect(process).to.throw(InvalidNameTypeFor)
+      examples.forEach(example => {
+        for (const part in example) {
+          it(`will accept the ${part} part`, () => {
+            const names = { [part]: example[part] }
+            transaction.process({character: {race: {id: raceWithOptions}}, names})
+            expectNameToEqual(part, example[part])
+          })
+        }
       })
     })
-  })
+  }
 
   it('will throw without a handler factory', () => {
     const process = () => transaction = new ChooseNames
@@ -99,5 +112,13 @@ describe('The choose names transaction', () => {
   it('will throw without a race', () => {
     const process = () => transaction.process({ character: {}, names: {}})
     expect(process).to.throw(RequiresRace)
+  })
+
+  it('will throw with a bad name type', () => {
+    const process = () => transaction.process({
+      character: {race: {id: 'tiefling'}},
+      names: {clan: 'Ironfist'}
+    })
+    expect(process).to.throw(InvalidNameTypeFor)
   })
 })

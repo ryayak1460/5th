@@ -15,11 +15,8 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-const { RequiresHandlerFactory, RequiresRace, InvalidNameTypeFor } =
-  require('../errors')
-
-const invalidNameTypes = ['child', 'adult', 'family', 'nickname', 'surname',
-  'childhood', 'orc', 'infernal', 'virtue']
+const { Character } = require('../entities')
+const { RequiresHandlerFactory } = require('../errors')
 
 module.exports = class {
   constructor(handlerFactory) {
@@ -29,19 +26,15 @@ module.exports = class {
     this.handler = handlerFactory.make('choose names')
   }
 
-  process({ character, names }) {
-    if (!character.race) {
-      throw new RequiresRace
-    }
-    const hasInvalidNameType = invalidNameTypes.reduce(
-      (holds, name) => holds || names.hasOwnProperty(name), false)
-    if (hasInvalidNameType) {
-      throw new InvalidNameTypeFor(character.race, 'child')
-    }
-    this.handler.handle({
-      character: {
-        names: Object.assign({}, character.names, names)
+  process({ character: original, names }) {
+    let character = new Character(original)
+    const data = Object.assign({}, original, {
+      race: {
+        id: original.race.id,
+        names: Object.assign({}, original.race.names, names)
       }
     })
+    character = new Character(data)
+    this.handler.handle({ character: character.data })
   }
 }

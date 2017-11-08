@@ -15,28 +15,20 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-const { RequiresFormatterFactory, RequiresHandlerFactory } =
-  require('../errors')
-const { Character, RaceFactory } = require('../entities')
-
-const factory = new RaceFactory
+const { RequiresHandlerFactory } = require('../errors')
+const { Character } = require('../entities')
 
 module.exports = class {
-  constructor(formatterFactory, handlerFactory) {
-    if (!formatterFactory) {
-      throw new RequiresFormatterFactory
-    }
+  constructor(handlerFactory) {
     if (!handlerFactory) {
       throw new RequiresHandlerFactory
     }
-    this.formatter = formatterFactory.make('character')
     this.handler = handlerFactory.make('select race')
   }
 
-  process({ character: original, race: name }) {
-    let character = new Character(original)
-    let race = factory.make(name)
-    character.race = race
-    this.handler.handle({ character: this.formatter.format(character) })
+  process({ character: original, race }) {
+    const data = Object.assign({}, original, { race: { id: race }})
+    const character = new Character(data)
+    this.handler.handle({ character: character.data })
   }
 }

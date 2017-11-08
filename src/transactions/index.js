@@ -16,7 +16,6 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 const SelectRace = require('./SelectRace')
-const SelectSubrace = require('./SelectSubrace')
 const ChooseNames = require('./ChooseNames')
 
-module.exports = { SelectRace, SelectSubrace, ChooseNames }
+module.exports = { SelectRace, ChooseNames }

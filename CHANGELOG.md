@@ -23,6 +23,11 @@ We based the format on [Keep a Changelog][] and this project adheres to
 
 ## [Unreleased][]
 
+## [0.2.2][] - 2017-11-07
+### Fixed
+- Entity design.  Removed needless factories, race classes and formatters since
+  we only need backing data and to validate said backing data anyway.
+
 ## [0.2.1][] - 2017-10-29
 ### Fixed
 - Moved subrace validation logic to Character entity.
@@ -44,7 +49,8 @@ We based the format on [Keep a Changelog][] and this project adheres to
 
 [Keep a Changelog]: http://keepachangelog.com/en/1.0.0/
 [Semantic Versioning]: http://semver.org/spec/v2.0.0.html
-[Unreleased]: https://github.com/ryayak1460/5th/compare/0.2.1...master
+[Unreleased]: https://github.com/ryayak1460/5th/compare/0.2.2...master
+[0.2.2]: https://github.com/ryayak1460/5th/compare/0.2.1...0.2.2
 [0.2.1]: https://github.com/ryayak1460/5th/compare/0.2.0...0.2.1
 [0.2.0]: https://github.com/ryayak1460/5th/compare/0.1.0...0.2.0
 [0.1.0]: https://github.com/ryayak1460/5th/compare/0.0.0...0.1.0
